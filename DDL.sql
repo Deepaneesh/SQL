@@ -151,3 +151,24 @@ DROP TABLE IF EXISTS employee_details;
 -- =========================================================
 -- END OF DDL SCRIPT
 -- =========================================================
+
+-- ==========================================================
+-- Defining Primary Keys and Foreign Keys
+-- =========================================================
+
+
+CREATE TABLE countries (
+    code TEXT PRIMARY KEY,
+    name TEXT
+);
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    age INTEGER,
+    country_code TEXT NOT NULL,
+    username TEXT,
+    password TEXT,
+    is_admin BOOLEAN,
+    FOREIGN KEY (country_code) REFERENCES countries (code)
+);
