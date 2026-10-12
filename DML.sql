@@ -28,3 +28,13 @@ VALUES
 DELETE FROM users
 WHERE name = 'Samantha';
 
+-- UPDATE IN SQL
+
+UPDATE users
+SET 
+ username = 'Sammysam',
+ password = 'forrecord'
+
+WHERE 
+ id = 2;
+
