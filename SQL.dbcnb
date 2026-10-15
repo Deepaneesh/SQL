@@ -1,0 +1,359 @@
+cells:
+  - kind: 2
+    languageId: sql
+    value: "CREATE TABLE customers (\r
+
+      \    customer_id INTEGER PRIMARY KEY,\r
+
+      \    customer_name TEXT NOT NULL,\r
+
+      \    email TEXT UNIQUE NOT NULL,\r
+
+      \    city TEXT,\r
+
+      \    state TEXT,\r
+
+      \    signup_date DATE\r
+
+      );\r
+
+      \r
+
+      CREATE TABLE categories (\r
+
+      \    category_id INTEGER PRIMARY KEY,\r
+
+      \    category_name TEXT NOT NULL UNIQUE\r
+
+      );\r
+
+      \r
+
+      CREATE TABLE products (\r
+
+      \    product_id INTEGER PRIMARY KEY,\r
+
+      \    product_name TEXT NOT NULL,\r
+
+      \    category_id INTEGER NOT NULL,\r
+
+      \    price REAL CHECK (price > 0),\r
+
+      \    stock INTEGER CHECK (stock >= 0),\r
+
+      \    FOREIGN KEY (category_id) REFERENCES categories(category_id)\r
+
+      );\r
+
+      \r
+
+      CREATE TABLE orders (\r
+
+      \    order_id INTEGER PRIMARY KEY,\r
+
+      \    customer_id INTEGER NOT NULL,\r
+
+      \    order_date DATE NOT NULL,\r
+
+      \    status TEXT NOT NULL\r
+
+      \        CHECK (status IN ('Pending', 'Shipped', 'Delivered',
+      'Cancelled')),\r
+
+      \    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)\r
+
+      );\r
+
+      \r
+
+      CREATE TABLE order_items (\r
+
+      \    order_item_id INTEGER PRIMARY KEY,\r
+
+      \    order_id INTEGER NOT NULL,\r
+
+      \    product_id INTEGER NOT NULL,\r
+
+      \    quantity INTEGER NOT NULL CHECK (quantity > 0),\r
+
+      \    unit_price REAL NOT NULL CHECK (unit_price > 0),\r
+
+      \    FOREIGN KEY (order_id) REFERENCES orders(order_id),\r
+
+      \    FOREIGN KEY (product_id) REFERENCES products(product_id)\r
+
+      );\r
+
+      \r
+
+      CREATE TABLE payments (\r
+
+      \    payment_id INTEGER PRIMARY KEY,\r
+
+      \    order_id INTEGER NOT NULL,\r
+
+      \    payment_date DATE,\r
+
+      \    amount REAL CHECK (amount >= 0),\r
+
+      \    payment_method TEXT\r
+
+      \        CHECK (payment_method IN ('UPI', 'Card', 'Net Banking',
+      'Cash')),\r
+
+      \    payment_status TEXT\r
+
+      \        CHECK (payment_status IN ('Paid', 'Pending', 'Failed',
+      'Refunded')),\r
+
+      \    FOREIGN KEY (order_id) REFERENCES orders(order_id)\r
+
+      );"
+    metadata: {}
+  - kind: 2
+    languageId: sql
+    value: "INSERT INTO categories (category_id, category_name)\r
+
+      VALUES\r
+
+      (1, 'Electronics'),\r
+
+      (2, 'Clothing'),\r
+
+      (3, 'Home Appliances'),\r
+
+      (4, 'Books'),\r
+
+      (5, 'Sports');\r
+
+      \r
+
+      INSERT INTO customers\r
+
+      (customer_id, customer_name, email, city, state, signup_date)\r
+
+      VALUES\r
+
+      (1, 'Arun Kumar', 'arun@gmail.com', 'Bengaluru', 'Karnataka',
+      '2025-01-15'),\r
+
+      (2, 'Priya Sharma', 'priya@gmail.com', 'Chennai', 'Tamil Nadu',
+      '2025-02-20'),\r
+
+      (3, 'Rahul Das', 'rahul@gmail.com', 'Hyderabad', 'Telangana',
+      '2025-03-10'),\r
+
+      (4, 'Sneha Reddy', 'sneha@gmail.com', 'Bengaluru', 'Karnataka',
+      '2025-04-05'),\r
+
+      (5, 'Vijay Kumar', 'vijay@gmail.com', 'Coimbatore', 'Tamil Nadu',
+      '2025-05-12'),\r
+
+      (6, 'Ananya Singh', 'ananya@gmail.com', 'Mumbai', 'Maharashtra',
+      '2025-06-18'),\r
+
+      (7, 'Karthik Raj', 'karthik@gmail.com', 'Chennai', 'Tamil Nadu',
+      '2025-07-22'),\r
+
+      (8, 'Meera Nair', 'meera@gmail.com', 'Kochi', 'Kerala', '2025-08-14'),\r
+
+      (9, 'Suresh Babu', 'suresh@gmail.com', 'Bengaluru', 'Karnataka',
+      '2025-09-01'),\r
+
+      (10, 'Divya Menon', 'divya@gmail.com', 'Pune', 'Maharashtra',
+      '2025-09-25');\r
+
+      \r
+
+      INSERT INTO products\r
+
+      (product_id, product_name, category_id, price, stock)\r
+
+      VALUES\r
+
+      (1, 'Laptop', 1, 65000, 15),\r
+
+      (2, 'Wireless Mouse', 1, 1200, 50),\r
+
+      (3, 'Keyboard', 1, 2500, 30),\r
+
+      (4, 'Headphones', 1, 3500, 25),\r
+
+      (5, 'T-Shirt', 2, 800, 100),\r
+
+      (6, 'Jeans', 2, 1800, 60),\r
+
+      (7, 'Running Shoes', 5, 4500, 40),\r
+
+      (8, 'Coffee Maker', 3, 5500, 20),\r
+
+      (9, 'Air Fryer', 3, 7500, 18),\r
+
+      (10, 'SQL Book', 4, 900, 35),\r
+
+      (11, 'Python Book', 4, 1100, 45),\r
+
+      (12, 'Football', 5, 1500, 25);\r
+
+      \r
+
+      INSERT INTO orders\r
+
+      (order_id, customer_id, order_date, status)\r
+
+      VALUES\r
+
+      (101, 1, '2025-10-01', 'Delivered'),\r
+
+      (102, 2, '2025-10-03', 'Delivered'),\r
+
+      (103, 3, '2025-10-05', 'Shipped'),\r
+
+      (104, 1, '2025-10-07', 'Delivered'),\r
+
+      (105, 4, '2025-10-10', 'Cancelled'),\r
+
+      (106, 5, '2025-10-12', 'Delivered'),\r
+
+      (107, 6, '2025-10-15', 'Pending'),\r
+
+      (108, 7, '2025-10-18', 'Delivered'),\r
+
+      (109, 8, '2025-10-20', 'Shipped'),\r
+
+      (110, 9, '2025-10-22', 'Delivered'),\r
+
+      (111, 10, '2025-10-25', 'Pending'),\r
+
+      (112, 3, '2025-10-28', 'Delivered');\r
+
+      \r
+
+      INSERT INTO order_items\r
+
+      (order_item_id, order_id, product_id, quantity, unit_price)\r
+
+      VALUES\r
+
+      (1, 101, 1, 1, 65000),\r
+
+      (2, 101, 2, 2, 1200),\r
+
+      \r
+
+      (3, 102, 5, 3, 800),\r
+
+      (4, 102, 6, 1, 1800),\r
+
+      \r
+
+      (5, 103, 4, 1, 3500),\r
+
+      (6, 103, 3, 1, 2500),\r
+
+      \r
+
+      (7, 104, 11, 2, 1100),\r
+
+      \r
+
+      (8, 105, 9, 1, 7500),\r
+
+      \r
+
+      (9, 106, 7, 1, 4500),\r
+
+      (10, 106, 12, 2, 1500),\r
+
+      \r
+
+      (11, 107, 8, 1, 5500),\r
+
+      \r
+
+      (12, 108, 10, 2, 900),\r
+
+      (13, 108, 5, 2, 800),\r
+
+      \r
+
+      (14, 109, 1, 1, 65000),\r
+
+      \r
+
+      (15, 110, 6, 2, 1800),\r
+
+      (16, 110, 5, 1, 800),\r
+
+      \r
+
+      (17, 111, 4, 2, 3500),\r
+
+      \r
+
+      (18, 112, 2, 1, 1200),\r
+
+      (19, 112, 3, 1, 2500),\r
+
+      (20, 112, 11, 1, 1100);\r
+
+      \r
+
+      INSERT INTO payments\r
+
+      (payment_id, order_id, payment_date, amount, payment_method,
+      payment_status)\r
+
+      VALUES\r
+
+      (1, 101, '2025-10-01', 67400, 'Card', 'Paid'),\r
+
+      (2, 102, '2025-10-03', 4200, 'UPI', 'Paid'),\r
+
+      (3, 103, '2025-10-05', 6000, 'Card', 'Paid'),\r
+
+      (4, 104, '2025-10-07', 2200, 'UPI', 'Paid'),\r
+
+      (5, 105, '2025-10-10', 7500, 'Card', 'Refunded'),\r
+
+      (6, 106, '2025-10-12', 7500, 'UPI', 'Paid'),\r
+
+      (7, 107, '2025-10-15', 5500, 'Net Banking', 'Pending'),\r
+
+      (8, 108, '2025-10-18', 3400, 'Cash', 'Paid'),\r
+
+      (9, 109, '2025-10-20', 65000, 'Card', 'Paid'),\r
+
+      (10, 110, '2025-10-22', 4400, 'UPI', 'Paid'),\r
+
+      (11, 111, '2025-10-25', 7000, 'Card', 'Pending'),\r
+
+      (12, 112, '2025-10-28', 4800, 'UPI', 'Paid');\r
+
+      \r\n"
+    metadata: {}
+  - kind: 2
+    languageId: sql
+    value: "SELECT\r
+
+      \  *\r
+
+      FROM\r
+
+      \  categories;"
+    metadata: {}
+  - kind: 1
+    languageId: markdown
+    value: "# Cleaning the sqlite_stat from table list"
+    metadata: {}
+  - kind: 2
+    languageId: sql
+    value: "DROP TABLE IF EXISTS sqlite_stat1;\r
+
+      DROP TABLE IF EXISTS sqlite_stat4;"
+    metadata: {}
+metadata:
+  conn:
+    id: 2OZSPonRi57SM9cVp1oJG
+    name: My_database
+  database: main
