@@ -1,7 +1,7 @@
 cells:
   - kind: 2
     languageId: sql
-    value: "CREATE TABLE customers (\r
+    value: "CREATE TABLE IF NOT EXISTS customers (\r
 
       \    customer_id INTEGER PRIMARY KEY,\r
 
@@ -19,7 +19,7 @@ cells:
 
       \r
 
-      CREATE TABLE categories (\r
+      CREATE TABLE IF NOT EXISTS categories (\r
 
       \    category_id INTEGER PRIMARY KEY,\r
 
@@ -29,7 +29,7 @@ cells:
 
       \r
 
-      CREATE TABLE products (\r
+      CREATE TABLE IF NOT EXISTS products (\r
 
       \    product_id INTEGER PRIMARY KEY,\r
 
@@ -47,7 +47,7 @@ cells:
 
       \r
 
-      CREATE TABLE orders (\r
+      CREATE TABLE IF NOT EXISTS orders (\r
 
       \    order_id INTEGER PRIMARY KEY,\r
 
@@ -66,7 +66,7 @@ cells:
 
       \r
 
-      CREATE TABLE order_items (\r
+      CREATE TABLE IF NOT EXISTS order_items (\r
 
       \    order_item_id INTEGER PRIMARY KEY,\r
 
@@ -86,7 +86,7 @@ cells:
 
       \r
 
-      CREATE TABLE payments (\r
+      CREATE TABLE IF NOT EXISTS payments (\r
 
       \    payment_id INTEGER PRIMARY KEY,\r
 
@@ -108,7 +108,7 @@ cells:
 
       \    FOREIGN KEY (order_id) REFERENCES orders(order_id)\r
 
-      );"
+      );\r\n"
     metadata: {}
   - kind: 2
     languageId: sql
@@ -340,7 +340,7 @@ cells:
 
       FROM\r
 
-      \  categories;"
+      \  categories;\r\n"
     metadata: {}
   - kind: 1
     languageId: markdown
@@ -350,10 +350,18 @@ cells:
     languageId: sql
     value: "DROP TABLE IF EXISTS sqlite_stat1;\r
 
-      DROP TABLE IF EXISTS sqlite_stat4;"
+      DROP TABLE IF EXISTS sqlite_stat4;\r\n"
+    metadata: {}
+  - kind: 2
+    languageId: sql
+    value: ""
+    metadata: {}
+  - kind: 2
+    languageId: sql
+    value: ""
     metadata: {}
 metadata:
   conn:
-    id: 2OZSPonRi57SM9cVp1oJG
-    name: My_database
+    id: v8gfr41sej2vJd-iNv0jy
+    name: my_database
   database: main
