@@ -64,8 +64,9 @@ FROM
 
 -- Trimming the Text
 
-
 SELECT
-  TRIM(CONCAT(' ',Species,' '))
+  TRIM(
+       CONCAT(' ',Species,' ')
+       )
 FROM
   iris_tbl;
