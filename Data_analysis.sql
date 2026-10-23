@@ -36,3 +36,36 @@ SELECT
     CAST(STRFTIME('%Y', DATETIME(time_hour)) AS INTEGER) AS year
 FROM weather_tbl
 WHERE DATETIME(time_hour) > '2013-01-02';
+
+-- Working with Strings ---------------------------------------------------
+
+-- Concating the Strings
+
+SELECT 
+   CONCAT(iris_tbl."Petal.Length",' ',iris_tbl."Petal.Width")
+FROM
+  iris_tbl
+LIMIT
+  5;
+
+-- Selecting the Substring
+
+SELECT
+  SUBSTR(Species,2,5)
+FROM
+  iris_tbl;
+
+-- Converting to upper
+
+SELECT
+  UPPER(SUBSTR(Species,2,5))
+FROM
+  iris_tbl;
+
+-- Trimming the Text
+
+
+SELECT
+  TRIM(CONCAT(' ',Species,' '))
+FROM
+  iris_tbl;

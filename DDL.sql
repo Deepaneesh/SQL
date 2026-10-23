@@ -39,6 +39,19 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name TEXT NOT NULL UNIQUE
 );
 
+-- =========================================================
+-- 3.1 CREATING A NEW TABLE FROM EXISTING TABLES
+
+-- DROP TABLE IF EXISTS ranked_data;
+
+CREATE TABLE IF NOT EXISTS ranked_data AS
+SELECT
+    *,
+    DENSE_RANK() OVER (
+        PARTITION BY Species
+        ORDER BY "Sepal.Length"
+    ) AS rank
+FROM iris_tbl;
 
 -- =========================================================
 -- 4. ALTER TABLE: ADD COLUMN & Drop COLUMN
