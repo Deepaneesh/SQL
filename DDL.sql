@@ -185,3 +185,5 @@ CREATE TABLE users (
     is_admin BOOLEAN,
     FOREIGN KEY (country_code) REFERENCES countries (code)
 );
+
+--  While droping drop from the bottom remove the tables which is not required for another tables
